@@ -43,8 +43,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  const { nombre, marca, categoria, descripcion, precio, cantidad, talla } =
-    req.body;
+  const { nombre, marca, categoria, descripcion, precio, cantidad } = req.body;
   let existeZapato;
 
   try {
@@ -69,7 +68,6 @@ router.post("/", async (req, res, next) => {
       descripcion,
       precio,
       cantidad,
-      talla,
     });
     console.log(nuevoZapato);
 

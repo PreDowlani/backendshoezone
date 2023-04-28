@@ -240,7 +240,7 @@ router.get("/:id/ver_carrito", async (req, res, next) => {
 
 //Para añadir el zapato al array de carrito del usuario
 //api/usuario/el id del usuario que le queremso añadir / y el carrito (un endpoint)
-router.put("/:id/carrito", async (req, res, next) => {
+router.put("/:id/ver_carrito", async (req, res, next) => {
   let idUsuario = req.params.id; //el id del usuario
   let usuarioCarrito; //el carrito del usuario
   let añadirZapato; //y el zapato que le vamos a añadir en el array
