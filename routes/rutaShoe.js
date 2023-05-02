@@ -147,4 +147,20 @@ router.delete("/:id", async (req, res, next) => {
   });
 });
 
+//Añadimos el buscador:
+router.get("/search/:search", async (req, res, next) => {
+  const search = req.params.search;
+  let products;
+  try {
+    products = await Shoe.find({
+      marca: { $regex: search, $options: "i" },
+    });
+  } catch (err) {
+    const error = new Error("Ha ocurrido un error en la recuperación de datos");
+    error.code = 500;
+    return next(error);
+  }
+  res.status(200).json({ mensaje: "Zapatos encontrados", zapatos: products });
+});
+
 module.exports = router;
