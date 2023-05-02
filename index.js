@@ -8,10 +8,10 @@ app.use(cors());
 
 app.use(express.json());
 
-const rutaUser = require("../BackEnd/routes/rutaUser");
+const rutaUser = require("./BackEnd/routes/rutaUser");
 app.use("/api/usuario", rutaUser);
 
-const rutaShoe = require("../BackEnd/routes/rutaShoe");
+const rutaShoe = require("./BackEnd/routes/rutaShoe");
 app.use("/api/productos", rutaShoe);
 
 app.use((req, res) => {
