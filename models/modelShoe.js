@@ -13,10 +13,10 @@ const shoeSchema = new mongoose.Schema({
     ref: "User",
   },
   cantidad: { type: Number, required: true, default: 1 },
-  // talla: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "tallas",
-  // },
+  talla: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "tallas",
+  },
 });
 
 shoeSchema.plugin(uniqueValidator);

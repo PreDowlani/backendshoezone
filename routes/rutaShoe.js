@@ -4,7 +4,7 @@ const router = express.Router();
 
 const Shoe = require("../models/modelShoe");
 const User = require("../models/modelUser");
-// const Tallas = require("../models/modelTalla");
+const Tallas = require("../models/modelTalla");
 
 router.get("/", async (req, res, next) => {
   let zapatos;
@@ -43,7 +43,8 @@ router.get("/:id", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  const { nombre, marca, categoria, descripcion, precio, cantidad } = req.body;
+  const { nombre, marca, categoria, descripcion, precio, cantidad, talla } =
+    req.body;
   let existeZapato;
 
   try {
@@ -68,6 +69,7 @@ router.post("/", async (req, res, next) => {
       descripcion,
       precio,
       cantidad,
+      talla: await Tallas.findById(talla),
     });
     console.log(nuevoZapato);
 
@@ -92,8 +94,10 @@ router.patch("/:id", async (req, res, next) => {
   const idZapatos = req.params.id;
   let cambiosPorHacer = req.body;
   let zapatoEditar;
+  let talla;
   try {
     zapatoEditar = await Shoe.findByIdAndUpdate(idZapatos, cambiosPorHacer, {
+      talla: await Tallas.findById(talla),
       new: true,
       runValidators: true,
     });
@@ -105,7 +109,7 @@ router.patch("/:id", async (req, res, next) => {
     return next(err);
   }
   res.status(200).json({
-    mensaje: "Curso modificado",
+    mensaje: "Zapato modificado",
     zapatos: zapatoEditar,
   });
 });
@@ -162,5 +166,56 @@ router.get("/search/:search", async (req, res, next) => {
   }
   res.status(200).json({ mensaje: "Zapatos encontrados", zapatos: products });
 });
+
+//Añadimos las tallas
+// router.put("/:id/tallas", async (req, res, next) => {
+//   let idZapato = req.params.id;
+//   let { tallas } = req.body;
+//   let editarZapato;
+//   try {
+//     editarZapato = await Shoe.findById(idZapato);
+//     if (!editarZapato) {
+//       return res.status(404).json({ mensaje: "Zapato no encontrado" });
+//     }
+//     // Verificar si la talla existe en la base de datos
+//     const tallaExistente = await Tallas.findOne({ tallas: tallas });
+//     if (!tallaExistente) {
+//       return res.status(404).json({ mensaje: "Talla no encontrada" });
+//     }
+//     // Asignar la talla al zapato
+//     editarZapato.talla = tallaExistente._id;
+//     await editarZapato.save();
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({
+//       mensaje: "Error al añadir la talla al zapato",
+//       error: error.message,
+//     });
+//     return next(error);
+//   }
+//   res.status(200).json({
+//     mensaje: "Talla añadida al zapato correctamente",
+//     zapatoActualizado: editarZapato,
+//   });
+// });
+
+// router.patch("/:id", async (req, res, next) => {
+//   const { talla } = req.body;
+//   let idZapato = req.params.id;
+//   let editarZapato;
+//   try {
+//     editarZapato = await Shoe.findByIdAndUpdate(
+//       idZapato,
+//       { talla: await Tallas.findById(talla) },
+//       { new: true }
+//     );
+//     editarZapato.save();
+//   } catch (err) {
+//     console.log(err);
+//   }
+//   res.status(200).json({
+//     zapatoActualizado: editarZapato,
+//   });
+// });
 
 module.exports = router;
