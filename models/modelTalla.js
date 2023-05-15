@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const tallaSchema = new mongoose.Schema({
   tallas: {
     type: String,
-    required: true,
+    // required: true,
     enum: [
       "36",
       "37",

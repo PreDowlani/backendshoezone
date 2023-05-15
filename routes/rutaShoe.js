@@ -164,4 +164,40 @@ router.get("/search/:search", async (req, res, next) => {
   res.status(200).json({ mensaje: "Zapatos encontrados", zapatos: products });
 });
 
+
+
+
+router.patch("/:id/talla", async(req,res,next)=>{
+  let idZapato = req.params.id;
+  let editarTalla = req.body.tallas;
+  let añadirTalla;
+  let zapatosEditar;
+  try {
+    zapatosEditar = await Shoe.findById(idZapato);
+    añadirTalla = await Tallas.findById(editarTalla);
+    console.log(añadirTalla)
+
+    if(!zapatosEditar){
+      res.status(401).json({
+        mensaje : `Zapato no encontrado`,
+        error : error.message,
+      })
+    } else {
+      console.log(zapatosEditar)
+      console.log(añadirTalla)
+
+      zapatosEditar.tallas.push(añadirTalla);
+      await zapatosEditar.save();
+    }
+  }
+  catch (error) {
+    console.log(error)
+    return next(error)
+  }
+  res.status(200).json({
+    mensaje : `Añadido talla al zapato selecionado`,
+    zapato : zapatosEditar,
+  })
+})
+
 module.exports = router;

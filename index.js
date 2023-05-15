@@ -14,9 +14,12 @@ app.use("/api/usuario", rutaUser);
 const rutaShoe = require("./routes/rutaShoe");
 app.use("/api/productos", rutaShoe);
 
+const rutaTalla = require("./routes/rutaTalla");
+app.use("/api/tallas", rutaTalla);
+
 app.use((req, res) => {
   res.status(404).json({
-    mensaje: `No se ha podido conectar con el servidor..`,
+    mensaje: `No se que passsaa !!! ..`,
   });
 });
 
