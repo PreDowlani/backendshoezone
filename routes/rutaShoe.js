@@ -9,7 +9,7 @@ const Tallas = require("../models/modelTalla");
 router.get("/", async (req, res, next) => {
   let zapatos;
   try {
-    zapatos = await Shoe.find({});
+    zapatos = await Shoe.find({}).populate("tallas");
   } catch (error) {
     res.status(404).json({
       mensaje: `Error en listar todos los zapatos`,
@@ -27,7 +27,7 @@ router.get("/:id", async (req, res, next) => {
   let idZapato = req.params.id;
   let zapatoConcreto;
   try {
-    zapatoConcreto = await Shoe.findById(idZapato);
+    zapatoConcreto = await Shoe.findById(idZapato).populate("tallas");
     console.log(idZapato);
   } catch (err) {
     res.status(500).json({
@@ -173,7 +173,7 @@ router.patch("/:id/talla", async(req,res,next)=>{
   let añadirTalla;
   let zapatosEditar;
   try {
-    zapatosEditar = await Shoe.findById(idZapato);
+    zapatosEditar = await Shoe.findById(idZapato).populate("tallas");
     añadirTalla = await Tallas.findById(editarTalla);
     console.log(añadirTalla)
 
